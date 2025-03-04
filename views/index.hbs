@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="messages-list col-8">
+      <div class="d-none">
+        <h2>Message</h2>
+        <ul class="list-group">
+          <a href="#"
+             class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">User name</h5>
+              <small class="text-muted">Time</small>
+            </div>
+            <p class="mb-1">Message</p>
+          </a>
+        </ul>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="users-list d-none">
+        <h2>Users</h2>
+        <ul class="list-group">
+          <li class="list-group-item">User 1</li>
+        </ul>
+      </div>
+      <div class="login-form">
+        <form>
+          <div class="form-group mb-2">
+            <label for="nickname">Nickname</label>
+            <input type="text" id="nickname" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="message-form-container container fixed-bottom mb-5">
+  <form class="message-form d-none">
+    <div class="form-row row">
+      <label class="col-10">
+        <input type="text"
+               class="form-control"
+               placeholder="message">
+      </label>
+      <div class="col-2">
+        <button type="submit"
+                class="btn btn-primary w-100">Send
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
