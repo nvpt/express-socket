@@ -1,1 +1,1 @@
-body{padding:50px;font:14px 'Lucida Grande',Helvetica,Arial,sans-serif;background:#bfd5e8}a{color:#5e60ff}
+html,body{height:100%}body{padding:50px;font:14px 'Lucida Grande',Helvetica,Arial,sans-serif;background:#bfd5e8}a{color:#5e60ff}.error{color:red}.invalid{border:1px solid red}.h-100p{height:100%}.list-group{list-style:none}.chat{display:flex;flex-direction:column;justify-content:stretch;height:100%}.main{height:100%;overflow:hidden}.messages{height:100%}.messages-list{height:calc(100% - 34px);overflow:auto}

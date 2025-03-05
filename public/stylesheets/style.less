@@ -1,3 +1,8 @@
+
+html, body {
+  height: 100%;
+}
+
 body {
   padding: 50px;
   font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
@@ -6,4 +11,49 @@ body {
 
 a {
   color: #5e60ff;
+}
+
+/* Validation */
+
+.error {
+  color: red
+}
+
+.invalid {
+  border: 1px solid red;
+}
+
+/* Snippets */
+
+.h-100p {
+  height: 100%;
+}
+
+/* Forms */
+
+.list-group {
+  list-style: none;
+}
+
+/* Page */
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  height: 100%;
+}
+
+.main {
+  height: 100%;
+  overflow: hidden;
+}
+
+.messages {
+  height: 100%;
+}
+
+.messages-list {
+  height: calc(~'100% - 34px');
+  overflow: auto;
 }

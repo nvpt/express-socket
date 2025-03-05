@@ -2,16 +2,13 @@
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');*/
 const express = require('express');
-const path = require('path');
-const lessMiddleware = require('less-middleware');
-
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+const path = require('path');
+const lessMiddleware = require('less-middleware');
+const indexRouter = require('./routes/index');
+const users = ['Ivan'];
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,11 +42,43 @@ app.use('/', indexRouter);
 
 io.on('connection', (socket) => {
 
-})
+  socket.on('login', (nickname) => {
+    if (users.includes(nickname)) {
+      io.sockets.emit('loginResponse', { status: 'failed' });
+    } else {
+      users.push(nickname);
+      socket.nickname = nickname;
+      io.sockets.emit('loginResponse', { status: 'ok' });
+      io.sockets.emit('users', { users });
+    }
+  });
+
+  socket.on('message', (message) => {
+    io.sockets.emit('new message', {
+      message,
+      time: new Date()
+    });
+  });
+
+  socket.on('disconnect', () => {
+    if (socket.nickname) {
+
+      const userIndex = users.find(userName => userName = socket.nickname);
+
+      if (userIndex) {
+        users.splice(userIndex, 1);
+        io.sockets.emit('users', { users });
+      }
+
+      socket.nickname = undefined;
+    }
+  });
+
+});
 
 // module.exports = app;
 
-app.listen(3000, () => {
+server.listen(3000, () => {
   // tslint:disable-next-line:no-console
   console.log(`Server works on 3000`);
 });

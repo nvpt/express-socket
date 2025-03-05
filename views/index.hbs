@@ -1,52 +1,64 @@
-<div class="container">
-  <div class="row">
-    <div class="messages-list col-8">
-      <div class="d-none">
-        <h2>Message</h2>
-        <ul class="list-group">
-          <a href="#"
-             class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">User name</h5>
-              <small class="text-muted">Time</small>
-            </div>
-            <p class="mb-1">Message</p>
-          </a>
+<div class="chat container">
+  <div class="row main">
+    <!-- Messages -->
+    <div class="col-8 h-100p">
+      <div class="messages d-none">
+        <h2>Messages</h2>
+        <ul id="messagesList"
+            class="messages-list list-group">
         </ul>
       </div>
     </div>
+    <!--/ Messages -->
+
+    <!-- Users list -->
     <div class="col-4">
-      <div class="users-list d-none">
+      <div id="usersListContainer"
+           class="d-none">
         <h2>Users</h2>
-        <ul class="list-group">
+        <ul id="usersList"
+            class="list-group">
           <li class="list-group-item">User 1</li>
         </ul>
       </div>
-      <div class="login-form">
-        <form>
-          <div class="form-group mb-2">
+      <!-- Login form -->
+      <div class="login-form-container">
+        <form class="login-form">
+          <div class="form-group">
             <label for="nickname">Nickname</label>
-            <input type="text" id="nickname" class="form-control">
+            <input type="text"
+                   id="nickname"
+                   class="form-control"
+                   required>
+            <span class="input-error d-none">User already exists</span>
           </div>
-          <button type="submit" class="btn btn-primary w-100">Login</button>
+          <button type="submit"
+                  class="btn btn-primary w-100 mt-3">Login
+          </button>
         </form>
       </div>
+      <!--/ Login form -->
+
     </div>
+    <!--/ Users list -->
+
   </div>
-</div>
-<div class="message-form-container container fixed-bottom mb-5">
-  <form class="message-form d-none">
-    <div class="form-row row">
+  <!-- Message form -->
+  <div class="pt-4">
+    <form class="message-form row d-none">
       <label class="col-10">
-        <input type="text"
-               class="form-control"
+        <input id="messageInput"
+               type="text"
+               class="message form-control"
                placeholder="message">
       </label>
       <div class="col-2">
-        <button type="submit"
+        <button id="submitMessage"
+                type="submit"
                 class="btn btn-primary w-100">Send
         </button>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
+  <!--/ Message form -->
 </div>
