@@ -76,6 +76,12 @@ io.on('connection', (socket) => {
         io.sockets.emit('users', { users });
       }
 
+      io.sockets.emit('new message', {
+        isLeftChat: true,
+        date: new Date(),
+        nickname: socket.nickname
+      });
+
       socket.nickname = undefined;
     }
   });

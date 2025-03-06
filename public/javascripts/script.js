@@ -67,17 +67,35 @@ $(document).ready(() => {
     };
     const parsedDate = new Date(newMessage.date).toLocaleDateString('ru-RU', dateOptions);
     const parsedTime = new Date(newMessage.date).toLocaleTimeString('ru-RU', timeOptions);
-    const message = `
+
+    let message = '';
+
+    if (newMessage.isLeftChat && newMessage.nickname !== cachedNickName) {
+      message = `
           <li class="messages-list-item">
             <a href="#"
-               class="list-group-item list-group-item-action  message ${ cachedNickName === newMessage.nickname ? 'current' : '' }">
+               class="list-group-item list-group-item-action  message-wrap">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"></h5>
+                <small class="text-muted">${ parsedDate }, ${ parsedTime }</small>
+              </div>
+              <p class="mb-1 message alert">Пользователь ${ newMessage.nickname } покинул чат.</p>
+            </a>
+          </li>`;
+    } else {
+      message = `
+          <li class="messages-list-item">
+            <a href="#"
+               class="list-group-item list-group-item-action  message-wrap ${ cachedNickName === newMessage.nickname ? 'current' : '' }">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">${ newMessage.nickname }</h5>
                 <small class="text-muted">${ parsedDate }, ${ parsedTime }</small>
               </div>
-              <p class="mb-1">${ newMessage.message }</p>
+              <p class="mb-1 message">${ newMessage.message || '' }</p>
             </a>
           </li>`;
+    }
+
 
     messagesList.append(message);
   });
