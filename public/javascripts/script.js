@@ -9,18 +9,12 @@ $(document).ready(() => {
   const usersList = $('#usersList');
   const messages = $('.chat .messages');
   const messagesList = $('#messagesList');
-  const messagesListItem = $('.chat .messages-list-item');
+  let cachedNickName = '';
 
   const validate = () => {
     if ($('#messageInput').val().length) {
-      // tslint:disable-next-line:no-console
-      console.log(`16`);
-
       $('#submitMessage').prop('disabled', false);
     } else {
-      // tslint:disable-next-line:no-console
-      console.log(`21`);
-
       $('#submitMessage').prop('disabled', true);
     }
   };
@@ -31,6 +25,7 @@ $(document).ready(() => {
 
   loginForm.submit((event) => {
     event.preventDefault();
+    cachedNickName = nickname.val();
     socket.emit('login', nickname.val());
   });
 
@@ -43,41 +38,69 @@ $(document).ready(() => {
   //#region Listeners
   socket.on('loginResponse', (loginResponse) => {
 
-    if (loginResponse.status.toLowerCase() === 'ok') {
-      inputError.addClass('d-none');
-      nickname.removeClass('invalid');
-      loginForm.addClass('d-none');
-      messageForm.removeClass('d-none');
-      usersListContainer.removeClass('d-none');
-      messages.removeClass('d-none');
-    } else {
-      inputError.removeClass('d-none');
-      nickname.addClass('invalid');
+    if (nickname.val() === loginResponse.nickname) {
+      if (loginResponse.status.toLowerCase() === 'ok') {
+        inputError.addClass('d-none');
+        nickname.removeClass('invalid');
+        loginForm.addClass('d-none');
+        messageForm.removeClass('d-none');
+        usersListContainer.removeClass('d-none');
+        messages.removeClass('d-none');
+      } else {
+        inputError.removeClass('d-none');
+        nickname.addClass('invalid');
+      }
     }
-
   });
 
+  /* Рендер нового сообщения */
   socket.on('new message', (newMessage) => {
-// tslint:disable-next-line:no-console
-    console.log('40 >>> newMessage: \n', newMessage);
+    const dateOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    };
+    const timeOptions = {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    };
+    const parsedDate = new Date(newMessage.date).toLocaleDateString('ru-RU', dateOptions);
+    const parsedTime = new Date(newMessage.date).toLocaleTimeString('ru-RU', timeOptions);
     const message = `
           <li class="messages-list-item">
             <a href="#"
-               class="list-group-item list-group-item-action">
+               class="list-group-item list-group-item-action  message ${ cachedNickName === newMessage.nickname ? 'current' : '' }">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">User name</h5>
-                <small class="text-muted">${ new Date(newMessage.time).getHours() } : ${ new Date(newMessage.time).getMinutes() }</small>
+                <h5 class="mb-1">${ newMessage.nickname }</h5>
+                <small class="text-muted">${ parsedDate }, ${ parsedTime }</small>
               </div>
               <p class="mb-1">${ newMessage.message }</p>
             </a>
           </li>`;
 
     messagesList.append(message);
-
   });
 
-  socket.on('users', (users) => {
+  /* Рендер списка пользователей */
+  socket.on('users', ({ users }) => {
+    usersList.text('');
 
+    if (users && users.length) {
+      users.forEach(user => {
+        const element = `<li class="list-group-item user ${ user === cachedNickName ? 'current' : '' }">${ user }</li>`;
+        usersList.append(element);
+      });
+    } else {
+      usersList.text('');
+    }
   });
   //#endregion Listeners
+
+  //#region Before leave page
+  $(window).bind('beforeunload', function () {
+    cachedNickName = '';
+  });
+  //#endregion Before leave page
+
 });

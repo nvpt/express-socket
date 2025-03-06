@@ -3,7 +3,7 @@
     <!-- Messages -->
     <div class="col-8 h-100p">
       <div class="messages d-none">
-        <h2>Messages</h2>
+        <h2>Сообщения</h2>
         <ul id="messagesList"
             class="messages-list list-group">
         </ul>
@@ -15,25 +15,24 @@
     <div class="col-4">
       <div id="usersListContainer"
            class="d-none">
-        <h2>Users</h2>
+        <h2>Пользователи</h2>
         <ul id="usersList"
             class="list-group">
-          <li class="list-group-item">User 1</li>
         </ul>
       </div>
       <!-- Login form -->
       <div class="login-form-container">
         <form class="login-form">
           <div class="form-group">
-            <label for="nickname">Nickname</label>
+            <label for="nickname">Введите имя пользователя</label>
             <input type="text"
                    id="nickname"
                    class="form-control"
                    required>
-            <span class="input-error d-none">User already exists</span>
+            <span class="input-error d-none">Имя пользователя занято</span>
           </div>
           <button type="submit"
-                  class="btn btn-primary w-100 mt-3">Login
+                  class="btn btn-primary w-100 mt-3">Войти
           </button>
         </form>
       </div>
@@ -50,12 +49,12 @@
         <input id="messageInput"
                type="text"
                class="message form-control"
-               placeholder="message">
+               placeholder="Ввеодите сообщение...">
       </label>
       <div class="col-2">
         <button id="submitMessage"
                 type="submit"
-                class="btn btn-primary w-100">Send
+                class="btn btn-primary send-btn">Отправить
         </button>
       </div>
     </form>
